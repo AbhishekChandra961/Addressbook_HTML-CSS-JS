@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Addressbook</title>
+    <style>
+      /* Style the table */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      /* Style the table header */
+      th {
+        text-align: left;
+        background-color: #008CBA;
+        color: white;
+        padding: 8px;
+      }
+      
+      /* Style the table cells */
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      
+      /* Style the table rows */
+      tr:nth-child(even){background-color: #f2f2f2;}
+      
+      /* Style the form */
+      form {
+        border: 3px solid #f1f1f1;
+        max-width: 500px;
+        padding: 10px;
+      }
+      
+      /* Style the input fields */
+      input[type=text], input[type=tel] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+      /* Style the submit button */
+      input[type=submit] {
+        background-color: #008CBA;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      /* Style the submit button on hover */
+      input[type=submit]:hover {
+        background-color: #0077B6;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Addressbook</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+      <tbody id="addressbook">
+        <!-- Entries will be added dynamically using JavaScript -->
+      </tbody>
+    </table>
+    <h2>Add New Entry</h2>
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="id">ID:</label>
+      <input type="text" id="id" name="id" required>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required>
+      <input type="submit" value="Add Entry">
+    </form>
+    <script>
+      // Define an array to store the entries
+      let entries = [];
+      
+      // Function to add a new entry to the table
+      function addEntry(name, id, phone) {
+        // Add the entry to the array
+        entries.push({name: name, id: id, phone: phone});
+        
+        // Clear the table
+        document.getElementById("addressbook").innerHTML = "";
+        
+        // Loop through the entries array and add each entry to the table
+        entries.forEach(function(entry) {
+          let row = document.createElement("tr");
+          let nameCell = document.createElement("td");
+          let idCell = document.createElement("td");
+          let phoneCell = document.createElement("td");
+          nameCell.innerHTML = entry.name;
+          idCell.innerHTML = entry.id;
+          phoneCell.innerHTML = entry.phone;
+          row.appendChild(nameCell);
+                row.appendChild(idCell);
+          row.appendChild(phoneCell);
+          document.getElementById("addressbook").appendChild(row);
+        });
+        
+        // Clear the form fields
+        document.getElementById("name").value = "";
+        document.getElementById("id").value = "";
+        document.getElementById("phone").value = "";
+      }
+      
+      // Add an event listener to the form to handle submissions
+      document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let name = document.getElementById("name").value;
+        let id = document.getElementById("id").value;
+        let phone = document.getElementById("phone").value;
+        addEntry(name, id, phone);
+      });
+    </script>
+  </body>
+</html>
